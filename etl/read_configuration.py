@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 # Create a file handler
-file_handler = logging.handlers.RotatingFileHandler('./logs/app.log', maxBytes=1024, backupCount=5)
+file_handler = logging.handlers.RotatingFileHandler('./logs/etl.log', maxBytes=1024, backupCount=5)
 file_handler.setLevel(logging.DEBUG)
 
 # Create a console handler
