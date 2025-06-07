@@ -1,5 +1,7 @@
 import yaml
 import argparse
+import logging
+import logging.handlers
 
 def read_yaml_config(file_path):
     # Reads a YAML configuration file and returns a dictionary.
@@ -25,10 +27,31 @@ args = parser.parse_args()
 
 config_file_path = args.yaml
 config_data = read_yaml_config(config_file_path)
-    
+   
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# Create a file handler
+file_handler = logging.handlers.RotatingFileHandler('./logs/app.log', maxBytes=1024, backupCount=5)
+file_handler.setLevel(logging.DEBUG)
+
+# Create a console handler
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+
+# Create a formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+console_handler.setFormatter(formatter)
+
+# Add handlers to logger
+logger.addHandler(file_handler)
+logger.addHandler(console_handler)
+
+ 
 if config_data:
-    print("Configuration data:")
-    print(config_data)
+    logger.debug("Configuration data:")
+    logger.debug(config_data)
     # Access specific values:
     database_host = config_data.get("database", {}).get("host")
-    print(f"Database host: {database_host}")
+    logger.debug(f"Database host: {database_host}")
