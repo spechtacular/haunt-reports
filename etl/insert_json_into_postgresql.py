@@ -32,8 +32,7 @@ try:
     with psycopg2.connect(host="localhost", 
                database="thia", 
                user="ghoul", 
-               password="NotHalloween2024") 
-         as connection:
+               password="NotHalloween2024") as connection:
 
          with connection.cursor() as cursor:
 
@@ -50,7 +49,7 @@ try:
                 SELECT * FROM json_populate_recordset(null::your_table, %s)
             """
             cursor.execute(insert_sql, (json.dumps(data),))
-            conn.commit()
+            connection.commit()
 
 except (Exception, Error) as error:
     logging.error("Error while connecting to PostgreSQL: %s", error)

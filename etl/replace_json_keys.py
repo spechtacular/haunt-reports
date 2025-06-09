@@ -37,7 +37,7 @@ def write_modified_json(output_file_path, modified_json):
             json.dump(modified_json, of, indent=4)
     except PermissionError:
         print(f"Error: Permission denied to write to {output_file_path}")
-    except except as e:
+    except Exception as e:
        print(f"Exception occurred : {e}")
 
 # map key names passed from ivolunteer to proper json key names
