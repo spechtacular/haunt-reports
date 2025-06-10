@@ -1,7 +1,15 @@
 import yaml
 import argparse
 import logging
-import logging.handlers
+import platform
+import sys
+
+class HostnameFilter(logging.Filter):
+        hostname = platform.node()
+
+        def filter(self, record):
+            record.hostname = HostnameFilter.hostname
+            return True
 
 def read_yaml_config(file_path):
     # Reads a YAML configuration file and returns a dictionary.
@@ -25,33 +33,39 @@ parser = argparse.ArgumentParser("read_configuration")
 parser.add_argument("-y", "--yaml", help="yaml configuration file path", type=str, required=True)
 args = parser.parse_args()
 
-config_file_path = args.yaml
-config_data = read_yaml_config(config_file_path)
    
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+# logging experiment
 
-# Create a file handler
-file_handler = logging.handlers.RotatingFileHandler('./logs/etl.log', maxBytes=1024, backupCount=5)
-file_handler.setLevel(logging.DEBUG)
+# Create a file rotation handler
+#file_handler = logging.handlers.RotatingFileHandler('./logs/etl.log', maxBytes=1024, backupCount=5)
+#file_handler.setLevel(logging.DEBUG)
 
 # Create a console handler
 console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
+console_handler.addFilter(HostnameFilter())
 
 # Create a formatter
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-file_handler.setFormatter(formatter)
+formatter = logging.Formatter('%(hostname)s %(asctime)s - %(name)s - %(levelname)s - %(message)s')
 console_handler.setFormatter(formatter)
 
+# Create a logger   
+logger = logging.getLogger('etl_logger')
 # Add handlers to logger
-logger.addHandler(file_handler)
+#logger.addHandler(file_handler)
 logger.addHandler(console_handler)
+logger.setLevel(logging.DEBUG)
 
- 
-if config_data:
+
+
+config_data = read_yaml_config(args.yaml)
+
+if config_data is None:
+    sys.exit(1)
+else:
     logger.debug("Configuration data:")
     logger.debug(config_data)
     # Access specific values:
     database_host = config_data.get("database", {}).get("host")
     logger.debug(f"Database host: {database_host}")
+    csv_header_names = config_data.get("csv_header_name_mapping", {})
+    logger.debug(f"CSV Header names: {csv_header_names}")

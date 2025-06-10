@@ -23,3 +23,39 @@ server:
 api:
     url: "https://api.example.com"
     timeout: 30
+
+csv_header_name_mapping: 
+  "Unnamed: 0": "id"
+  "F.Name": "first_name"
+  "L.Name" : "last_name"
+  "E-Mail" : "email"
+  "Phone 1" : "phone1"
+  "Phone 2" : "phone2"
+  "Date of Birth" : "DOB"
+  "E-mail Blocked" : "email_verified"
+  "Phone Blocked" : "phone_verified"
+  "Member of Group(s)" : "groups"
+  "Event(s)" : "events"
+  "Emergency Contact  (First Name, Last Name)": "ICE_name"
+  "Emergency Contact Relation": "ICE_relation"
+  "Emergency Contact Phone Number ": "ICE_phone"
+  "Postal Code": "zip_code"
+  "T-Shirt Size": "tshirt_size"
+  "State/Province": "state"
+  "Added": "start_date"
+  "Last Activity": "last_activity"
+  "Are you under 18 years of age?": "under_18"
+  "Would you be able to wear a character mask" : "wear_mask"
+  "How did you hear about us" : "referral_source"
+  "Haunt Experience" : "haunt_experience"
+  "Allergies": "allergies"
+  "Notes": "notes"
+  "City": "city"
+  "Address": "address"
+  "Country": "country"
+  "Company": "company"
+  
+
+
+
+
