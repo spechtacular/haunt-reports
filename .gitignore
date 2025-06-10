@@ -7,3 +7,5 @@ lib
 include
 pyvenv.cfg
 .python-version
+data_in
+data_out
