@@ -2,10 +2,13 @@
 .venv
 *.log
 .DS_Store
-bin
-lib
-include
 pyvenv.cfg
 .python-version
 data_in
 data_out
+.env
+__pycache__/
+*.pyc
+*.db
+/static
+
